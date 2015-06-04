@@ -29,7 +29,6 @@ $(document).on('submit','#signUpForm',function(e){
         },
         error : function(user,error){ // 註冊失敗後會執行的 callback
           console.log(error) ;
-          alert(error.message);
         }
       });//endof signUp
 
