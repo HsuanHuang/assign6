@@ -1,0 +1,69 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <title>老師頁面</title>
+  <meta name="viewport" content="width=device-width">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/css.css">
+
+  <!--引入初始化 Parse 的 js 檔案-->
+  <script type="text/javascript" src="js/key.js"></script>
+  <script  type="text/javascript">
+    $(document).ready(function(){
+        if( Parse.User.current()){
+                  var current = Parse.User.current();
+                  var role = current.get("role");
+                  console.log(role);
+                  if(role == "teacher"){
+                    console.log("老師");
+                          var Sign = Parse.Object.extend("Sign");
+                          var query = new Parse.Query(Sign);
+                          query.find({
+                            success: function(results) {
+
+                              for (var i = 0; i < results.length; i++) { 
+                                var NameList = results[i];
+                                var nameList = NameList.get('username');
+
+                              $('#table').append("<tr><td>"+nameList+"</td></tr>");
+                              }
+                            },
+                            error: function(error) {
+                              alert("Error: " + error.code + " " + error.message);
+                            }
+                          });
+                  }else{
+                    alert("你沒有權限");
+                    window.location = 'index.html';
+                    return null ; 
+                  }
+          }else{
+            alert("請先登入");
+            window.location = 'logIn.html';
+            return null ; 
+          }
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <h2>老師頁面<a href="index.html" class="btn">個人頁面</a></h2>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <table id="table" class="table table-striped">
+        <tr>
+          <td>已出席學生</td>
+        </tr>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
