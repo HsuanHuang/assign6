@@ -18,8 +18,10 @@ $(document).on('submit','#signUpForm',function(e){
       user.set("username", $('#username').val());
       user.set("email",    $('#email').val());
       user.set("password", $('#password').val());
-      user.set("role", $('#-0') .val());
-      user.set("role", $('#-1') .val());
+      
+      user.set("role",$( "input:radio[name=role]:checked" ).val());
+      
+      
       user.signUp(null,{
         success : function(user){     // 註冊成功後會執行的 callback
           console.log(user);
